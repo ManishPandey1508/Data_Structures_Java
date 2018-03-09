@@ -7,7 +7,7 @@ LCS for input Sequences “ABCDGH” and “AEDFHR” is “ADH” of length 3.
 LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.*/
 package DynamicProgramming;
 
-public class LCS {
+public class LongestCommonSubSequence {
 
 	public static void main(String[] args) {
 
@@ -27,7 +27,7 @@ public class LCS {
 
 		// make two dimensional array
 
-		int[][] mapping = new int[m][n];
+		int[][] mapping = new int[m+1][n+1];
 
 		for (int i = 0; i <= m; i++) {
 
@@ -35,7 +35,7 @@ public class LCS {
 
 				if (i == 0 || j == 0) {
 					mapping[i][j] = 0;
-				} else if (x[i] == y[j]) {
+				} else if (x[i-1] == y[j-1]) {
 
 					mapping[i][j] = 1 + mapping[i - 1][j - 1];
 				} else {
