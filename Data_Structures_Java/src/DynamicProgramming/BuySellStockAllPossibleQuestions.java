@@ -86,7 +86,7 @@ public class BuySellStockAllPossibleQuestions {
 
 			t_ik1 = Math.max(t_ik1, t_iko_Old - stock);
 
-			t_iko_Old = t_iko;
+			
 		}
 
 		return t_iko;
@@ -169,12 +169,10 @@ public class BuySellStockAllPossibleQuestions {
 		int t_ik0 = 0, pre_tik0 = 0, t_ik1 = Integer.MIN_VALUE;
 
 		for (int stock : stocks) {
-
 			int old_tik0 = t_ik0;
 			t_ik0 = Math.max(t_ik0, t_ik1 + stock);
 			t_ik1 = Math.max(t_ik1, pre_tik0 - stock);
 			pre_tik0 = old_tik0;
-
 		}
 		return t_ik0;
 

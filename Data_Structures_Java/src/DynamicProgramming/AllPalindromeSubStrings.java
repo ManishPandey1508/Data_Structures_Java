@@ -4,7 +4,8 @@ public class AllPalindromeSubStrings {
 
 	public static void main(String[] args) {
 
-		String str = "aaa";
+//		String str = "aaa";
+		String str = "abacac";
 		int res = countSubstrings(str);
 		System.out.println("No of plaindrome substring of" + str + "   is   " + res);
 
