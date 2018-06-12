@@ -1,8 +1,11 @@
 package Array_InterviewBit;
 
-/*You are given a binary string(i.e. with characters 0 and 1) S consisting of characters S1, S2, …, SN. In a single operation, you can choose two indices L and R such that 1 ≤ L ≤ R ≤ N and flip the characters SL, SL+1, …, SR. By flipping, we mean change character 0 to 1 and vice-versa.
+/*You are given a binary string(i.e. with characters 0 and 1) S consisting of characters S1, S2,..... SN. In a single operation, you can choose two indices L and R
+such that 1 ≤ L ≤ R ≤ N  and flip the characters SL, SL+1,.....,
+ SR. By flipping, we mean change character 0 to 1 and vice-versa.
 
-Your aim is to perform ATMOST one operation such that in final string number of 1s is maximised. If you don’t want to perform the operation, return an empty array. Else, return an array consisting of two elements denoting L and R. If there are multiple solutions, return the lexicographically smallest pair of L and R.
+Your aim is to perform ATMOST one operation such that in final string number of 1s is maximized. If you do not want to perform the operation, return an empty array. 
+Else, return an array consisting of two elements denoting L and R. If there are multiple solutions, return the lexicographically smallest pair of L and R.
 
 Notes:
 
@@ -26,7 +29,7 @@ package Array_InterviewBit;*/
 Say it has A 0s and B 1s. Eventually, there are B 0s and A 1s.
 
 So, number of 1s increase by A - B. We want to choose a subarray which maximizes this. Note, if we change 1s to -1, 
-then sum of values will give us A - B. Then, we have to find a subarray with maximum sum, which can be done via Kadane’s Algorithm.
+then sum of values will give us A - B. Then, we have to find a subarray with maximum sum, which can be done via Kadaneâ€™s Algorithm.
 */
 
 public class FlipBits {
