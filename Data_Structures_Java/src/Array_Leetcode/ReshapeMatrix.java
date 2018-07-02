@@ -29,10 +29,42 @@ Explanation:
 There is no way to reshape a 2 * 2 matrix to a 2 * 4 matrix. So output the original matrix.*/
 package Array_Leetcode;
 
+import util.ArrayUtil;
+
 public class ReshapeMatrix {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		int[][] matrix = {{1,2},{3,4}};
+		
+		reShapeMatrix(matrix, 1, 4);
+	}
+
+	public static void reShapeMatrix(int[][] matrix, int r, int c) {
+
+		int row = matrix.length;
+		int col = matrix[0].length;
+
+		int no_elem = row * col;
+
+		if (r * c != no_elem) {
+			System.out.println("Re - Shape not possible");
+			return;
+		}
+
+		int[][] result = new int[r][c];
+		int count = 0;
+		for (int i = 0; i < row; i++) {
+
+			for (int j = 0; j < col; j++) {
+				int reshapeRow = count / c;
+				int reshapeCol = count % c;
+				result[reshapeRow][reshapeCol] = matrix[i][j];
+				count++;
+			}
+
+		}
+		
+		ArrayUtil.printMatrix(result);
 
 	}
 
