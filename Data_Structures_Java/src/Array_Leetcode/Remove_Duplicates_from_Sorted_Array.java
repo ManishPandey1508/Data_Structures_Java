@@ -38,25 +38,47 @@ package Array_Leetcode;
 public class Remove_Duplicates_from_Sorted_Array {
 
 	public static void main(String[] args) {
-		int[] nums = {1,1,2};
-		System.out.println("Size with out duplicate"+ removeDuplicates(nums));
+		int[] nums = { 0,0,1,1,1,2,2,3,3,4 };
+		System.out.println("Size with out duplicate" + removeDuplicates(nums));
+		int[] nums2 = { 0,0,1,1,1,2,2,3,3,4 };
+		System.out.println("Size with out duplicate(Effecient way )  " + removeDuplicates(nums2));
 	}
+
+	// O(n2)
 
 	public static int removeDuplicates(int[] nums) {
 
-		if(nums==null || nums.length==0)
+		if (nums == null || nums.length == 0)
 			return 0;
-		int o =0,n=0;
-		while(n<nums.length) {
-			nums[o]=nums[n];
+		int o = 0, n = 0;
+		while (n < nums.length) {
+			nums[o] = nums[n];
 			n++;
-			while(n<nums.length && nums[o]==nums[n]) {
+			while (n < nums.length && nums[o] == nums[n]) {
 				n++;
-			}	
-			o++;	
+			}
+			o++;
 		}
-		
+
 		return o;
+
+	}
+
+	public static int removeDuplicatesEffecient(int[] nums) {
+
+		if (nums == null || nums.length == 0)
+			return 0;
+		// A variable to track non duplicate should start from 1st index
+		if(nums.length<2)
+			return nums.length;
 		
+		int noDuplicate = 1;
+
+		for (int i = 1; i < nums.length; i++) {
+			if (nums[i] != nums[i - 1])
+				nums[noDuplicate++] = nums[i];
+
+		}
+		return noDuplicate;
 	}
 }

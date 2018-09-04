@@ -27,10 +27,6 @@ public class HappyNumber {
 		System.out.println("Lucky Number "+ isHappy(n));
 		
 	}
-	
-	
-	
-	
 	public static boolean isHappy(int n) {
 		 Set<Integer> inLoop = new HashSet<Integer>();
 		if (n == 1)

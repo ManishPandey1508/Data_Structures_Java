@@ -31,6 +31,7 @@ public class FlippingAnImage {
 
 	public static void flipAnImage(int[][] image) {
 
+		// Get row and column from the matrix
 		int row = image.length;
 		int col = image[0].length;
 

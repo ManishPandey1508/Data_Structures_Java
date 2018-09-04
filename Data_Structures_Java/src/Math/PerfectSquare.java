@@ -27,24 +27,24 @@ public class PerfectSquare {
 	
 	
 	
-	public static boolean isPerfectSquare(int x) {
+	public static boolean isPerfectSquare(int n) {
 
-		if (x <= 0)
+		if (n <= 0)
 			throw new IllegalArgumentException();
 
-		if (x == 1)
+		if (n == 1)
 			return true;
 
 		int low = 1;
-		int high = x;
+		int high = n;
 
 		while (low <=high) {
 
 			int mid = low + (high - low) / 2;
-			if (mid * mid == x)
+			if (mid * mid == n)
 				return true;
 			else {
-				int div = x / mid;
+				int div = n / mid;
 				if (div >= mid) {
 					low = mid + 1;
 				} else

@@ -7,16 +7,17 @@ Example 1:
 Input: haystack = "hello", needle = "ll"
 Output: 2
 Example 2:
-
 Input: haystack = "aaaaa", needle = "bba"
-Output: -1*/
+Output: -1
+*/
+
 package linklists;
 
 public class ImplementstrStr {
 
 	public static void main(String[] args) {
 	
-		String haystack = "mississippi"; 
+		String haystack = "mississipi"; 
 				
 		String needle="issipi";
 		System.out.println("Index  "+ strStr(haystack,needle));

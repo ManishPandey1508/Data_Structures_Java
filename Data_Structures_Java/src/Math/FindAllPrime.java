@@ -9,8 +9,6 @@ public class FindAllPrime {
 		
 		System.out.println("Total prime till "+ n +" : "+ countPrimes(n));
 	}
-	
-	
 	public static int countPrimes(int n) {
 
 		if (n <= 1)

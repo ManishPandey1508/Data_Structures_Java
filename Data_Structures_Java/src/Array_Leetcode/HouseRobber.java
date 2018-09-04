@@ -33,6 +33,9 @@ public class HouseRobber {
 		
 		if(nums==null || nums.length==0)
 			return 0;
+		// At every step we will maintain two variable one is the max value if you rob the bank and 
+		//other is max value if you do not rob the bank
+		
 		int rob = 0;
 		int notRob = 0;
 		int total_Amount = 0;

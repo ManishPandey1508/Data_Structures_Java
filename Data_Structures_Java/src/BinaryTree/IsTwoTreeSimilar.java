@@ -1,7 +1,5 @@
 package BinaryTree;
 
-import java.util.Stack;
-
 public class IsTwoTreeSimilar {
 	public static void main(String[] args) {
 

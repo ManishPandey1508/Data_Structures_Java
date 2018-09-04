@@ -19,7 +19,7 @@ public class IntersectionOfLinkedLists {
 	}
 
 	// One approach is to find length from both end and find the difference and ..
-	// move longer end node for aboutthe difference and thn
+	// move longer end node for about the difference and then
 	// find intersection node.
 
 	/*
