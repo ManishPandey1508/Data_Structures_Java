@@ -20,16 +20,25 @@ import java.util.Stack;
 
 public class PreOrderTraversal {
 
-	public List<Integer> preorderTraversal(TreeNode root) {
+	 public List<Integer> preorderTraversal(TreeNode root) {
+		 List<Integer> list = new ArrayList<>();
+		  helper(root,list);
+		 return list;
+	 }
 
-		List<Integer> arrayList = new ArrayList<>();
-		if (root == null)
-			return arrayList;
-		arrayList.add(root.val);
-		arrayList.addAll(preOrderIterative(root.left));
-		arrayList.addAll(preOrderIterative(root.right));
-		return arrayList;
+	 
+	 
+	private void helper(TreeNode root, List<Integer> list) {
+		
+		if(root==null)
+			return;
+		list.add(root.val);
+		helper(root.left, list);
+		helper(root.right,list);
+		
 	}
+
+
 
 	/*
 	 * Create an empty stack, Push root node to the stack. Do following while stack
@@ -59,30 +68,6 @@ public class PreOrderTraversal {
 		return arrayList;
 	}
 
-	private List<Integer> preOrderIterative(TreeNode root) {
-		List<Integer> arrayList = new ArrayList<>();
-		Stack<TreeNode> stack = new Stack<>();
 
-		if (root == null)
-			return arrayList;
-
-		// While all nodes are covered
-		while (root != null) {
-
-			arrayList.add(root.val);
-			// Put right tree in stack
-			if (root.right != null) {
-				stack.push(root.right);
-			}
-			// go towards left
-			root = root.left;
-			// in case there is no left, go right
-			if (root == null && !stack.isEmpty()) {
-				root = stack.pop();
-			}
-
-		}
-		return arrayList;
-	}
 
 }

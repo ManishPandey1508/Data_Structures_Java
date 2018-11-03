@@ -35,7 +35,7 @@ public class MergeTwoSortedList {
 		System.out.println();
 	}
 
-	// recursive
+	// recursive(in space)
 	public static Node MergeLists(Node headA, Node headB) {
 		// This is a "method-only" submission.
 		// You only need to complete this method
@@ -55,6 +55,42 @@ public class MergeTwoSortedList {
 		}
 	}
 
+	
+// Iterative (not in space)	
+	 public Node mergeTwoLists(Node headA, Node headB) {
+	      
+	        if(headA==null && headB ==null)
+	            return null;
+	        if(headA ==null)
+	            return headB;
+	        if(headB ==null)
+	        return headA;
+	        
+	        Node result = new Node(0);
+	        Node prev= result;
+
+	        while(headA !=null && headB!=null){
+	            if(headA.value <= headB.value){
+	                prev.next = headA;
+	                headA = headA.next;
+	            }
+	            else{
+	                prev.next= headB;
+	                headB = headB.next;
+	            }
+	            prev=prev.next;
+	            
+	        }
+	        if(headA!=null)
+	            prev.next= headA;
+	        
+	        if(headB!=null)
+	            prev.next= headB;
+	        
+	        return result.next;
+	    }
+	
+	
 	public static void main(String[] args) {
 		MergeTwoSortedList list1 = new MergeTwoSortedList();
 		// Creating a linked list

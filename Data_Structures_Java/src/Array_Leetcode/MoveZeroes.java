@@ -28,6 +28,28 @@ public class MoveZeroes {
 
 	}
 
+	public static void moveZeroes2(int[] nums) {
+		int zeroCount = 0;
+
+		for (int k = 0; k < nums.length; k++) {
+
+			if (nums[k] == 0) {
+				zeroCount++;
+			}else
+			{
+				nums[k-zeroCount]=nums[k];
+			}
+
+		}
+
+		for (int i = nums.length-1; i> nums.length-i-1; i--) {
+
+			nums[i] = 0;
+		}
+
+	}
+	
+	
 	public static void moveZeroes(int[] nums) {
 		int nonzeroCount = 0;
 
