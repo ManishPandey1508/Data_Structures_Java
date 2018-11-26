@@ -1,54 +1,42 @@
 package Math;
 
+import java.util.Arrays;
+
 public class CoinChange {
 
 	public static void main(String[] args) {
 
 		int[] coins = { 186, 419, 83, 408 };
-
-		System.out.println("result " + coinChange(coins, 6249));
+		System.out.println("result " + coinChangeBottomUpDP(coins, 6249));
 	}
 
-	/*
-	 * Bottom Up DP The idea is very classic dynamic programming: think of the last
-	 * step we take. Suppose we have already found out the best way to sum up to
-	 * amount a, then for the last step, we can choose any coin type which gives us
-	 * a remainder r where r = a-coins[i] for all i's. For every remainder, go
-	 * through exactly the same process as before until either the remainder is 0 or
-	 * less than 0 (meaning not a valid solution). With this idea, the only
-	 * remaining detail is to store the minimum number of coins needed to sum up to
-	 * r so that we don't need to recompute it over and over again.
-	 */
-	private static int coinChange(int[] coins, int amount) {
+	// T[i] = Min(T[i], 1+ T[i-coins(j)]) for all j and if i>= coins(j)
 
-		if (amount < 1)
-			return 0;
+	private static int coinChangeBottomUpDP(int[] coins, int total) {
 
-		int[] dp = new int[amount + 1];
+		Arrays.sort(coins);
 
-		int sum = 0;
+		int[] T = new int[total + 1];
 
-		// fill each element of dp array
-		while (++sum <= amount) {
-			// default value of dp[i] if sum is not possible
-			int min = -1;
-			// check dp[i] for each coin
-			for (int coin : coins) {
+		Arrays.fill(T, Integer.MAX_VALUE - 1);
 
-				if (sum >= coin && dp[sum - coin] != -1) {
+		T[0] = 0;
 
-					int temp = 1 + dp[sum - coin];
-					if (min < 0)
-						min = temp;
-					else
-						min = Math.min(min, temp);
+		for (int j = 0; j < coins.length; j++) {
+
+			for (int i = 1; i <= total; i++) {
+
+				if (i >= coins[j]) {
+
+					T[i] = Math.min(T[i], 1 + T[i - coins[j]]);
+
 				}
-				
+
 			}
-			dp[sum] = min;
+
 		}
-		
-		return dp[amount];
+		return T[total];
+
 	}
 
 }

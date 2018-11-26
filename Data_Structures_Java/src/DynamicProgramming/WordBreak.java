@@ -1,5 +1,6 @@
 package DynamicProgramming;
 
+import java.util.Arrays;
 import java.util.List;
 
 /*Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
@@ -27,10 +28,13 @@ Output: false*/
 public class WordBreak {
 
 	public static void main(String[] args) {
-
+	String 	s = "applepenapple";
+	String[] wordDict = {"apple", "pen"};
+	
+	 wordBreakDP1(s, Arrays.asList(wordDict));
 	}
 
-	public boolean wordBreak(String s, List<String> wordDict) {
+	public static boolean wordBreakDP1(String s, List<String> wordDict) {
 
 		if (s.isEmpty())
 			return true;
@@ -46,7 +50,7 @@ public class WordBreak {
 
 				if (wordDict.contains(s.substring(j, i + 1)) && (j == 0 || dp[j - 1] == true)) {
 
-					System.out.print("temp" + s.substring(j, i + 1));
+					System.out.println(" temp                   " + s.substring(j, i + 1));
 					dp[i] = true;
 					break;
 				}
@@ -58,4 +62,7 @@ public class WordBreak {
 		return dp[s.length() - 1];
 	}
 
+	
+	
+	
 }
