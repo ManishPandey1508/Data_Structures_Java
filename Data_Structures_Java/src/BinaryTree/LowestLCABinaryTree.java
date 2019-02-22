@@ -36,9 +36,69 @@ p and q are different and both values will exist in the binary tree.*/
 
 public class LowestLCABinaryTree {
 
+	
+	
+	//Using just Stack
+	public TreeNode lca(TreeNode root, TreeNode p, TreeNode q) {
+
+		if (p == root || q == root)
+			return root;
+		else if (p == q)
+			return p;
+
+		Stack<TreeNode> stackP= lcaHelper(root, p);
+		Stack<TreeNode> stackQ =lcaHelper(root, q);
+		if(stackP==null || stackQ==null)
+			return null;
+		
+		TreeNode prev = null;
+		
+		while(!stackP.isEmpty() && !stackQ.isEmpty()) {
+			TreeNode s = stackP.pop();
+			TreeNode t = stackQ.pop();
+			if(s.equals(t)) {
+				prev = s;
+			}
+				
+		}
+		return prev;
+		
+	}
+
+	public Stack<TreeNode> lcaHelper(TreeNode root, TreeNode p) {
+
+		if(root==null) {
+		return null;	
+		}
+		
+		if (root.equals(p)) {
+			Stack<TreeNode> stack = new Stack<TreeNode>();
+			stack.push(p);
+			return stack;
+		}
+
+		Stack<TreeNode> leftTreeStack = lcaHelper(root.left, p);
+		Stack<TreeNode> rightTreeStack = lcaHelper(root.right, p);
+		if (leftTreeStack != null) {
+			leftTreeStack.push(root);
+			return leftTreeStack;
+		}
+
+		
+		if (rightTreeStack != null) {
+			rightTreeStack.push(root);
+			return rightTreeStack;
+		}
+			
+
+		return null;
+
+	}
+	
+	// Using Stack and Map
+
 	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
-		// Use a Map to store parents of all nodes starting from root till we find both
 		// p and q
 		// Use stack to traverse nodes
 

@@ -22,31 +22,40 @@ public class TrappingRainWater {
 
 	public static int trap(int[] height) {
 
-		// Will push indexes of array in the stack not actual height
-		Stack<Integer> stack = new Stack<>();
-
-		int i = 0, maxBotWater = 0, maxWater = 0;
-
-		while (i < height.length) {
-
-			if (stack.isEmpty() || height[stack.peek()] > height[i]) {
-				stack.push(i++);
-			} else {
-				int bot = stack.pop();
-
-				if (stack.isEmpty())
-					
-					maxBotWater = 0;
-				
-				else {
-					
-					maxBotWater = (Math.min(height[i], height[stack.peek()]) - height[bot]) * (i - stack.peek() - 1);
-				}
-
-			}
-			maxWater+=maxBotWater;
-		}
-		return maxWater;
+		 
+        if(height==null || height.length==0)
+            return 0;
+        
+        int length = height.length;
+        
+        int[] leftToRight = new int[length];
+        
+        int[] rightToLeft = new int[length];
+       
+        int max = height[0];
+        leftToRight[0]= height[0];
+        
+        for(int i=1;i< length;i++){
+           max = Math.max(max,height[i]);
+             leftToRight[i] = max;
+        }
+        max = height[length-1];
+        rightToLeft[length-1] = max;
+        
+           for(int i=length-2;i>=0;i--){
+            max = Math.max(max,height[i]);
+               rightToLeft[i] = max;
+        }
+        
+        int water =0;
+        
+        for(int i=0;i<length;i++){
+         
+            water+= Math.min(leftToRight[i],rightToLeft[i])- height[i];
+            
+        }
+        
+        return water;
 	}
 
 }

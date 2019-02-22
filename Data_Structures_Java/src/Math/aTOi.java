@@ -81,5 +81,4 @@ public class aTOi {
 		    }
 		    return total * sign;
 	}
-
 }

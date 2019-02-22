@@ -23,10 +23,9 @@ public class SearchInRotatatedArray {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		
-		int[] arr = {4,5,6,7,0,1,2};
+		int[] arr = { 4, 5, 6, 7, 0, 1, 2 };
 		int target = 5;
-		System.out.println(search(arr,target));
+		System.out.println(search(arr, target));
 	}
 
 	public static int search(int[] nums, int target) {
@@ -34,40 +33,45 @@ public class SearchInRotatatedArray {
 		if (nums == null || nums.length == 0)
 			return -1;
 
-		if (nums.length == 1)
-			if (nums[0] == target)
-				return 0;
-			else
-				return -1;
+		int length = nums.length;
 
-		int pivot = 0;
-		for (int i = 1; i < nums.length; i++) {
-			if (nums[i] < nums[i - 1]) {
-				pivot = i;
-				break;
+		if (length == 1)
+			return nums[0] == target ? 0 : -1;
+
+		return binarySearchHelper(nums, 0, length - 1, target);
+
+	}
+
+	public static int binarySearchHelper(int[] nums, int low, int high, int target) {
+
+		if (low == high)
+			return nums[low] == target ? low : -1;
+
+		if (low > high)
+			return -1;
+
+		int mid = low + (high - low) / 2;
+
+		if (nums[mid] == target)
+			return mid;
+
+		if (nums[low] <= nums[mid]) {
+
+			if (nums[low] <= target && target < nums[mid])
+				return binarySearchHelper(nums, low, mid - 1, target);
+			else {
+				return binarySearchHelper(nums, mid + 1, high, target);
 			}
+		} else {
+
+			if (target <= nums[high] && target > nums[mid]) {
+				return binarySearchHelper(nums, mid + 1, high, target);
+			} else {
+				return binarySearchHelper(nums, low, mid - 1, target);
+			}
+
 		}
-		int found = -1;
-		
-		found = binarySearch(nums,target,pivot,nums.length-1);
-		if(found==-1) {
-			found= binarySearch(nums,target,0,pivot);
-		}
-		return found;
-		
-		
+
 	}
 
-	private static int binarySearch(int[] nums, int target, int start, int end) {
-		
-			if(start ==end)
-				return -1;
-		int mid = (start + end)/2;
-		if(nums[mid]==target)
-			return mid;	
-		else if(nums[mid] < target)
-			return binarySearch(nums, target, mid+1, end);
-		else
-			return binarySearch(nums, target,start, mid);
-	}
 }
