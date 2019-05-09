@@ -1,7 +1,9 @@
 package DynamicProgramming;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /*Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
 
@@ -28,41 +30,50 @@ Output: false*/
 public class WordBreak {
 
 	public static void main(String[] args) {
-	String 	s = "applepenapple";
-	String[] wordDict = {"apple", "pen"};
-	
-	 wordBreakDP1(s, Arrays.asList(wordDict));
+		String s = "applepenapple";
+		String[] wordDict = { "apple", "pen" };
+
+		System.out.println(
+				" Can String be formed ?? " + wordBreakRecursive(s, 0, new HashSet<String>(Arrays.asList(wordDict))));
+		Boolean[] dp = new Boolean[s.length()];
+		dp[0] = true;
+		System.out.println(" Can String be formed ?? " + wordBreakDP1(s, 0, Arrays.asList(wordDict), dp));
 	}
 
-	public static boolean wordBreakDP1(String s, List<String> wordDict) {
+	public static boolean wordBreakRecursive(String s, int start, Set<String> wordDict) {
 
-		if (s.isEmpty())
+		if (start >= s.length())
 			return true;
 
-		if (wordDict.isEmpty())
-			return false;
-
-		boolean[] dp = new boolean[s.length()];
-
-		for (int i = 0; i < s.length(); i++) {
-
-			for (int j = 0; j <= i; j++) {
-
-				if (wordDict.contains(s.substring(j, i + 1)) && (j == 0 || dp[j - 1] == true)) {
-
-					System.out.println(" temp                   " + s.substring(j, i + 1));
-					dp[i] = true;
-					break;
-				}
+		for (int end = start + 1; end <= s.length(); end++) {
+			if (wordDict.contains(s.substring(start, end)) && wordBreakRecursive(s, end, wordDict)) {
+				return true;
 
 			}
 
 		}
+		return false;
 
-		return dp[s.length() - 1];
 	}
 
-	
-	
-	
+	public static boolean wordBreakDP1(String s, int start, List<String> wordDict, Boolean[] dp) {
+
+		if (start >= s.length())
+			return true;
+
+		if (dp[start] != null)
+			return dp[start];
+
+		for (int end = start + 1; end <= s.length(); end++) {
+
+			if (wordDict.contains(s.substring(start, end)) && wordBreakDP1(s, end, wordDict, dp)) {
+				dp[start] = true;
+			}
+
+		}
+
+		return dp[start] = false;
+
+	}
+
 }

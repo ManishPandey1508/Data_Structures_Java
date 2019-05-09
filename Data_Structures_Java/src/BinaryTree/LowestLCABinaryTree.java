@@ -43,9 +43,10 @@ public class LowestLCABinaryTree {
 
 		if (p == root || q == root)
 			return root;
+		
 		else if (p == q)
 			return p;
-
+		
 		Stack<TreeNode> stackP= lcaHelper(root, p);
 		Stack<TreeNode> stackQ =lcaHelper(root, q);
 		if(stackP==null || stackQ==null)

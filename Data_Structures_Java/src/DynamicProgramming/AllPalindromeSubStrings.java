@@ -18,15 +18,15 @@ public class AllPalindromeSubStrings {
 	public static void main(String[] args) {
 
 		// String str = "aaa";
-		String str = "abacac";
+		String str = "abcdcba";
 		int res = countSubstrings(str);
 		System.out.println("No of plaindrome substring of" + str + "   is   " + res);
 
 	}
 
 	/*
-	 * We will have 1 double arrays, for storing Boolean relation ship of
-	 * palindrome, palindrom[i][j] means substring from i to j is palindrome
+	 * We will have 1 double index array to store Boolean relation ship of
+	 * palindrome, palindrome[i][j] means substring from i to j is palindrome
 	 */
 
 	static int countSubstrings(String s) {

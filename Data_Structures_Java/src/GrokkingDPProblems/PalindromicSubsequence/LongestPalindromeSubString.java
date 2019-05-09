@@ -76,30 +76,26 @@ public class LongestPalindromeSubString {
 			return 0;
 
 		boolean[][] dp = new boolean[str.length()][str.length()];
-		int maxCount = 1;
 
-		// every string with one character is a palindrome
 		for (int i = 0; i < str.length(); i++)
 			dp[i][i] = true;
 
-		for (int start = str.length() - 1; start >= 0; start--) {
+		int maxCount = 1;
 
-			for (int end = start + 1; end < str.length(); end++) {
-
-				if (str.charAt(end) == str.charAt(start)) {
-
-					if (end - start == 1 || dp[start + 1][end - 1]) {
-						dp[start][end] = true;
-
-						maxCount = Math.max(maxCount, end - start + 1);
+		for (int i = str.length() - 1; i > 0; i--) {
+			for (int j = i + 1; j < str.length(); j++) {
+				if (str.charAt(i) == str.charAt(j))
+					
+					if (Math.abs(i - j) == 1 || dp[i + 1][j - 1]) {
+						dp[i][j] = true;
+						maxCount = Math.max(Math.abs(i-j) + 1, maxCount);
 					}
-				}
 
 			}
 
 		}
-
 		return maxCount;
+
 	}
 
 }

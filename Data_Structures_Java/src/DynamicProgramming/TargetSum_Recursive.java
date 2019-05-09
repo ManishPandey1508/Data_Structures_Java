@@ -6,8 +6,7 @@ public class TargetSum_Recursive {
 
 		int[] nums = {1,1,1,1,1};
 		int res = findTargetSumWays(nums, 3);
-		System.out.println("Result is   "+ res);
-		
+		System.out.println("Result is   "+ res);	
 		
 	}
 

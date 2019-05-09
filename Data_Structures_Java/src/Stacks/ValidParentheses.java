@@ -1,50 +1,49 @@
 package Stacks;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Stack;
 
 public class ValidParentheses {
 
 	public static void main(String[] args) {
-		String s ="()[]{";
-		
-		System.out.println("Is Valid Parentheses  "+ isValid(s));
+		String s = "()[]{";
+
+		System.out.println("Is Valid Parentheses  " + isValid(s));
 	}
-	
-	
-	
+
 	public static boolean isValid(String s) {
 
-		if(s.isEmpty()||s.length()%2!=0)
-			return false;
-		
-		
-		HashMap<Character, Character> map = new HashMap<>();
+		if (s == null || s.length() == 0)
+			return true;
 
-		map.put(')', '(');
-		map.put(']', '[');
-		map.put('}', '{');
+		char[] brackets = s.toCharArray();
+		if (brackets.length % 2 != 0)
+			return false;
 
 		Stack<Character> stack = new Stack<>();
+		int i = 0;
+		while (i < brackets.length) {
 
-		for (char c : s.toCharArray()) {
-			if (map.keySet().contains(c)) {
-				if (!stack.pop().equals(map.get(c))) {
-					return false;
-				}
-
-			}
+			if (stack.isEmpty())
+				stack.push(brackets[i]);
+			else if (brackets[i] == '(' || brackets[i] == '{' || brackets[i] == '[')
+				stack.push(brackets[i]);
+			else if (brackets[i] == ']' && stack.peek() == '[')
+				stack.pop();
+			else if (brackets[i] == '}' && stack.peek() == '{')
+				stack.pop();
+			else if (brackets[i] == ')' && stack.peek() == '(')
+				stack.pop();
 			else {
-				stack.push(c);
+				stack.push(brackets[i]);
 			}
-		}
 
-		if(!stack.isEmpty())
-			return false;
+			i++;
+
+		}
 		
-		return true;
+		return stack.isEmpty();
+
 	}
+	
 
 }

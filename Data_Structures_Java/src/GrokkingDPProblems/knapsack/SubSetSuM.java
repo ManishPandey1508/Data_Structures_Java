@@ -4,10 +4,11 @@ package GrokkingDPProblems.knapsack;
 public class SubSetSuM {
 
 	public static void main(String[] args) {
-		int[] num = { 1, 3, 4, 8 };
+		int[] num = {1, 2, 7, 1, 5};
 
-		System.out.println(canPartition(num, 6));
-		System.out.println(canPartitionBottomUP(num, 6));
+		System.out.println(canPartition(num, 10));
+		System.out.println(canPartitionBottomUP(num, 10));
+		System.out.println("Recursive "+ canPartitionRecursive(num,10,0));
 	}
 
 	public static boolean canPartition(int[] num, int sum) {
@@ -32,6 +33,23 @@ public class SubSetSuM {
 		return result;
 
 	}
+	
+	private static boolean canPartitionRecursive(int[] num,int target,int index) {
+		
+		
+		if(index>=num.length)
+			return target==0;
+		if(target==0)
+			return true;
+		boolean bool1 = false,bool2 = false;
+		if(num[index]<= target)
+			bool1= canPartitionRecursive(num, target-num[index], index+1);
+		bool2 = canPartitionRecursive(num, target, index+1);
+		
+		return bool1 || bool2;
+	}
+	
+	
 
 	private static boolean canPartitionDPTopDown(int[] num, int[][] dp, int sum, int index) {
 

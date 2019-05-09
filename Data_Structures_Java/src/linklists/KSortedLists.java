@@ -16,6 +16,8 @@ public class KSortedLists {
 		if (lists == null || lists.length == 0)
 			return null;
 
+		if(lists[0]==null)
+			return null;
 		ListNode result = new ListNode(-1);
 		ListNode current = result;
 		int k = lists.length;
@@ -43,7 +45,6 @@ public class KSortedLists {
 
 			if (current.next != null)
 				pq.offer(current.next);
-
 		}
 
 		return result.next;

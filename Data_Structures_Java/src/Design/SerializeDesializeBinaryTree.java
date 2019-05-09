@@ -1,8 +1,11 @@
-package BinaryTree;
+package Design;
 
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.concurrent.DelayQueue;
+
+import BinaryTree.TreeNode;
 
 /*Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
 
@@ -27,43 +30,46 @@ public class SerializeDesializeBinaryTree {
 	// Encodes a tree to a single string.
 	public String serialize(TreeNode root) {
 		StringBuilder sb = new StringBuilder();
-		buildString(root, sb);
+		serializeHelper(root, sb);
+		System.out.println(sb.toString());
 		return sb.toString();
 
 	}
 
-	private void buildString(TreeNode root, StringBuilder sb) {
-
-		if (root == null) {
+	public void serializeHelper(TreeNode root, StringBuilder sb) {
+		if (root == null)
 			sb.append(NN).append(splitter);
-		} else {
-			sb.append(root.val).append(splitter);
-			buildString(root.left, sb);
-			buildString(root.right, sb);
-		}
-
-	}
-
-	// Decodes your encoded data to tree.
-	public TreeNode deserialize(String data) {
-		Deque<String> queue = new LinkedList<>();
-		queue.addAll(Arrays.asList(data.split(splitter)));		
-		TreeNode root  = makeTreeFromString(queue);
-		return root;
-	}
-
-	private TreeNode makeTreeFromString(Deque<String> queue) {
-	
-		String s = queue.remove();
-		if(s.equals(NN))
-		return null;
-		else{
-			TreeNode root = new TreeNode(Integer.parseInt(s));
-			root.left = makeTreeFromString(queue);					
-			root.right = makeTreeFromString(queue);
-			return root;
+		else {
+			sb.append(root.val+"").append(splitter);
+			serializeHelper(root.left, sb);
+			serializeHelper(root.right, sb);
 		}
 		
 	}
 
+	// Decodes your encoded data to tree.
+	public TreeNode deserialize(String data) {
+
+		Deque<String> dq = new LinkedList<>();
+		dq.addAll(Arrays.asList(data.split(splitter)));
+
+		TreeNode root = deserialize(dq);
+		return root;
+
+	}
+
+	public TreeNode deserialize(Deque<String> dq) {
+		TreeNode root;
+		String str = dq.remove();
+		if (str.equals(NN)) {
+			return null;
+		} else {
+			root = new TreeNode(Integer.parseInt(str));
+			root.left = deserialize(dq);
+			root.right = deserialize(dq);
+			return root;
+		}
+
+		
+	}
 }

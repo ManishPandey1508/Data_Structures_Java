@@ -46,13 +46,14 @@ Output: 1994
 Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.*/
 public class RomanToInteger {
 
-	
 	public static void main(String[] args) {
 		System.out.println(romanToInt("MLXIX"));
 	}
-	
+
 	public static int romanToInt(String s) {
 
+		
+		
 		Map<Character, Integer> map = new HashMap<>();
 		map.put('I', 1);
 		map.put('V', 5);
@@ -61,23 +62,22 @@ public class RomanToInteger {
 		map.put('C', 100);
 		map.put('D', 500);
 		map.put('M', 1000);
+		char[] ch = s.toCharArray();
 
-		if (s == null || s.length() == 0)
-			return -1;
-		int n = s.length();
+		int number = 0;
+		number += map.get(ch[0]);
 
-		int res = 0;
+		for (int i = 1; i < ch.length; i++) {
 
-		for (int i = 0; i < n; i++) {
-
-			if (i!=n-1 && map.get(s.charAt(i)) < map.get(s.charAt(i + 1))) {
-				res -= map.get(s.charAt(i));
+			if (map.get(ch[i]) > map.get(ch[i - 1])) {
+				number += map.get(ch[i]) - 2 * map.get(ch[i - 1]);
 			} else {
-				res += map.get(s.charAt(i));
+				number += map.get(ch[i]);
 			}
 
 		}
-		return res;
+
+		return number;
 	}
 
 }

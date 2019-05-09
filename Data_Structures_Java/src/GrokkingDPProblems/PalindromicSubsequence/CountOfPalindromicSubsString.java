@@ -2,39 +2,45 @@ package GrokkingDPProblems.PalindromicSubsequence;
 
 public class CountOfPalindromicSubsString {
 
-	  public int findMPPCuts(String st) {
-	    return this.findMPPCutsRecursive(st, 0, st.length()-1);
-	  }
+	private boolean isPalindrome(String st, int x, int y) {
+		while (x < y) {
+			if (st.charAt(x++) != st.charAt(y--))
+				return false;
+		}
+		return true;
+	}
 
-	  private int findMPPCutsRecursive(String st, int startIndex, int endIndex) {
-	    // we don't need to cut the string if it is a palindrome
-	    if(startIndex >= endIndex || isPalindrome(st, startIndex, endIndex))
-	      return 0;
+	public static int findCountOFPalindromicSubstring(String str) {
 
-	    // at max, we need to cut the string into its 'length-1' pieces
-	    int minimumCuts = endIndex-startIndex;
-	    for (int i=startIndex; i <= endIndex; i++) {
-	      if(isPalindrome(st, startIndex, i)){
-	        // we can cut here as we have a palindrome from 'startIndex' to 'i'
-	        minimumCuts = Math.min(minimumCuts, 1 + findMPPCutsRecursive(st, i+1, endIndex));
-	      }
-	    }
-	    return minimumCuts;
-	  }
+		boolean[][] dp = new boolean[str.length()][str.length()];
+		int count = 0;
+		for (int i = 0; i < str.length(); i++) {
+			dp[i][i] = true;
+			count++;
+		}
 
-	  private boolean isPalindrome(String st, int x, int y) {
-	    while(x < y) {
-	      if(st.charAt(x++) != st.charAt(y--))
-	        return false;
-	    }
-	    return true;
-	  }
+		for (int i = str.length() - 1; i >= 0; i--) {
 
-	  public static void main(String[] args) {
-		  CountOfPalindromicSubsString mpp = new CountOfPalindromicSubsString();
-	    System.out.println(mpp.findMPPCuts("abdbca"));
-	    System.out.println(mpp.findMPPCuts("cdpdd"));
-	    System.out.println(mpp.findMPPCuts("pqr"));
-	    System.out.println(mpp.findMPPCuts("pp"));
-	   }
+			for (int j = i + 1; j < str.length() - 1; j++) {
+
+				if (str.charAt(i) == str.charAt(j)) {
+					if (Math.abs(i - j) == 1 || dp[i + 1][j - 1]) {
+						dp[i][j] = true;
+						count++;
+					}
+
+				}
+
+			}
+
+		}
+		return count;
+
+	}
+
+	public static void main(String[] args) {
+
+		System.out.println("Palindrom count" + findCountOFPalindromicSubstring("abdbca"));
+
+	}
 }

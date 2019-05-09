@@ -1,4 +1,7 @@
 package GrokkingDPProblems.Fibonacci;
+
+import java.util.Arrays;
+
 /*Given an array of positive numbers, where each element represents the max number of jumps that can be made forward from that element,
 write a program to find the minimum number of jumps needed to reach the end of the array (starting from the first element). 
 If an element is 0, then we cannot move through that element*/
@@ -13,6 +16,7 @@ public class MinimumJumps {
 
 		int[] jumps = { 2, 1, 1, 1, 4 };
 		System.out.println(countMinJumps(jumps));
+		System.out.println(minJumpBottomUP(jumps));
 	}
 
 	public static int countMinJumps(int[] jumps) {
@@ -69,6 +73,27 @@ public class MinimumJumps {
 		}
 		dp[index] = total_jump;
 		return dp[index];
+	}
+
+	// bottom UP DP
+	private static int minJumpBottomUP(int[] nums) {
+
+		int length = nums.length;
+		if (length == 0)
+			return 0;
+
+		int[] dp = new int[length];
+
+		Arrays.fill(dp, Integer.MAX_VALUE);
+		dp[0] = 0;
+		for (int start = 0; start < length - 1; start++) {
+
+			for (int end = start + 1; end <= start + nums[start] && end < length; end++) {
+				dp[end] = Math.min(dp[end], dp[start] + 1);
+			}
+
+		}
+		return dp[length - 1];
 	}
 
 }

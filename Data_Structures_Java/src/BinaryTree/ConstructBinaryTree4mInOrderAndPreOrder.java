@@ -1,5 +1,7 @@
 package BinaryTree;
 
+import util.ArrayUtil;
+
 public class ConstructBinaryTree4mInOrderAndPreOrder {
 
 	 int preIndex = 0;
@@ -28,6 +30,7 @@ public class ConstructBinaryTree4mInOrderAndPreOrder {
 
 		// find index in InOrder
 		int index = search(inorder, inStartIndex, inEndIndex, tNode.val);
+	
 
 		tNode.left = constructTree(inorder, preorder, inStartIndex, index - 1);
 		tNode.right = constructTree(inorder, preorder, index + 1, inEndIndex);

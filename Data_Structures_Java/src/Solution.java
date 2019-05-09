@@ -1,77 +1,43 @@
 import java.util.*;
+import java.util.Map.Entry;
+
 class Solution {
-   static  Map<Character,Integer> map = new HashMap<>();
-   
-   
-   public static void main(String[] args) {
-		
-   	System.out.println(frequencySort("tree"));
-   	
-   	
+	static Map<Character, Integer> map = new HashMap<>();
+
+	
+
+	class LinkedListNode {
+		int val;
+		LinkedListNode next;
 	}
-   
-   
-   
-   
-    public static String frequencySort(String s) {
-  // create a map of frequency 
-        char[] chars = s.toCharArray();
-        
-        for(int i=0;i< chars.length;i++){
-            
-         if(map.containsKey(chars[i])){
-             
-            map.put(chars[i],map.get(chars[i])+1);
-             
-         }   
-         else{   
-             
-             map.put(chars[i],1);
-             
-         }   
-            
-    }
-        
-        
- // loop through map, get key value , create Freq class and add this class in Max Priority Queue
- // Priority Queue Compare method should compare two Freq objects using frequency           
-      PriorityQueue<Freq> pq = new PriorityQueue<Freq>(new Comparator<Freq>(){
-        
-    	  public int compare(Freq f1, Freq f2){
-              return f2.freq - f1.freq;
-          }
-      });
-  
-        
-     for(char c: map.keySet()){
-       pq.offer(new Solution().new Freq(c,map.get(c)));
-     }  
-        
-    StringBuilder sb = new StringBuilder();
-        
-        while(!pq.isEmpty()){
-         
-            Freq fq  = pq.poll();
-            for(int i=0;i<fq.freq;i++){
-                sb.append(fq.c);
-            }
-        }
-        
-        return sb.toString();
-    }
-    
-    // CLass to be used in Priority Queue Comporator
-    class Freq{
-        
-        char c;
-        int freq;
-        
-        public Freq(char c, int freq){
-            this.c = c;
-            this.freq = freq;          
-        }
-    }
-   
-    
-  
+
+	public static LinkedListNode distinct(LinkedListNode head) {
+
+		LinkedListNode root = head;
+		LinkedListNode pre = null;
+
+		Set<Integer> values = new HashSet<>();
+
+		while (root != null) {
+
+			if (values.contains(root.val)) {
+
+				LinkedListNode temp = root.next;
+				pre.next = root.next;
+				root = temp;
+
+			} else {
+				values.add(root.val);
+				pre = root;
+				root = root.next;
+
+			}
+
+		}
+
+		return head;
+
+	}
+
+	
 }

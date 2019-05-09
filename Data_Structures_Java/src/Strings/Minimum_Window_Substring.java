@@ -23,59 +23,62 @@ public class Minimum_Window_Substring {
 
 	public static String minWindow(String s, String t) {
 
-		if (t == null)
-			return "";
-	
 		
-		// Map to store frequency of T characters
-		
+
 		Map<Character, Integer> map = new HashMap<>();
 
+		// prepare a map of frequency of 't'
 		for (char c : t.toCharArray()) {
-
-			if (map.containsKey(c))
+			if (map.containsKey(c)) {
 				map.put(c, map.get(c) + 1);
-			else
+			} else {
 				map.put(c, 1);
+			}
+
 		}
-
-		int left = 0, right = 0, count = 0, minLength = s.length() + 1, minStringStartsAt = 0;
-
+		
+		int left = 0, right = 0, count = 0, minLength = s.length() + 1, minLengthStartsAt = 0;
+		
+		
+		// take a counter as right and starts moving it from left to right of 'S'
 		for (right = 0; right < s.length(); right++) {
-
-			// check if right character belongs to t, if it does thn reduce count and reduce
+			
+			char key = s.charAt(right);
+			// check if right character belongs to t, if it does thn increase count and reduce
 			// frequency in map
 
-			if (map.containsKey(s.charAt(right))) {
-				map.put(s.charAt(right), map.get(s.charAt(right)) - 1);
-
-				if (map.get(s.charAt(right)) >= 0) {
-					count++;
+			if (map.containsKey(key)) {
+				map.put(key, map.get(key) - 1);
+				
+				if (map.get(key) >= 0) {
+					count++;				
 				}
 			}
-			// if count reaches to t.length()
+
 			while (count == t.length()) {
-				// calculate the min length
 
 				if (right - left + 1 < minLength) {
 					minLength = right - left + 1;
-					minStringStartsAt = left;
+					minLengthStartsAt = left;
 				}
+
 				if (map.containsKey(s.charAt(left))) {
+
 					map.put(s.charAt(left), map.get(s.charAt(left)) + 1);
 					if (map.get(s.charAt(left)) > 0) {
 						count--;
 					}
 				}
-
 				left++;
 			}
-		}
 
-		if (minLength == s.length() + 1)
-			return "";
-		else
-			return s.substring(minStringStartsAt, minStringStartsAt + minLength);
+		}
+		System.out.println("Min Length starts At   ---- " + minLengthStartsAt);
+		System.out.println("Min Length ---- " + minLength);
+		System.out.println("left "+ left);
+		System.out.println("right "+ right);
+		
+		return minLength == s.length() + 1 ? "" : s.substring(minLengthStartsAt, minLengthStartsAt + minLength);
 
 	}
 

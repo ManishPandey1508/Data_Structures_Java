@@ -12,40 +12,37 @@ Note: next() and hasNext() should run in average O(1) time and uses O(h) memory,
 
 public class BST_Iterator_Next_Smallest {
 
-	TreeNode root;
 	Stack<TreeNode> stack = new Stack<>();
+	TreeNode root = null;
 
-	public void BSTIterator(TreeNode root) {
-		TreeNode curr = root;
-		// Go towards left to store all left element in stack same like we do for in
-		// order traversal
-
-		while (curr != null) {
-			stack.push(curr);
-			curr = curr.left;
+	public  BST_Iterator_Next_Smallest(TreeNode root) {
+		this.root = root;
+		TreeNode current = root;
+		while (current != null) {
+			stack.push(current);
+			current = current.left;
 		}
 
 	}
 
 	/** @return whether we have a next smallest number */
 	public boolean hasNext() {
-		return !stack.isEmpty();
+		return stack.isEmpty();
 	}
 
 	/** @return the next smallest number */
 	public int next() {
-
-		TreeNode node = stack.pop();
-		TreeNode curr = node;
-		while (curr != null) {
-			curr= curr.right;
-			while(curr!=null) {
-				stack.push(curr);
-				curr = curr.left;
+		TreeNode top = stack.pop();
+		int rvalue = top.val;
+		
+		if(top.right!=null) {
+			TreeNode current = top.right;
+			while(current!=null) {
+				stack.push(current);
+				current = current.left;
 			}
-			
 		}
-		return node.val;
-
+		
+		return rvalue;
 	}
 }

@@ -35,8 +35,17 @@ At the and it is only valid if there was at least 1 number and if we did see an 
 
 So basically the number should match this regular expression:*/
 public class IsValidNumber {
+
 	
-	public boolean isNumber(String s) {
+	public static void main(String[] args) {
+	
+		System.out.println(isNumber2("6+1"));
+		
+		
+	}
+	
+	
+	public static boolean isNumber(String s) {
 		s = s.trim();
 		boolean pointSeen = false;
 		boolean eSeen = false;
@@ -70,4 +79,5 @@ public class IsValidNumber {
 
 		return numberSeen && (eSeen && numberAfterE || !eSeen && !numberAfterE);
 	}
+
 }
