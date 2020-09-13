@@ -45,7 +45,7 @@ Explanation: The number "-91283472332" is out of the range of a 32-bit signed in
 public class aTOi {
 
 	public static void main(String[] args) {
-		System.out.println(myAtoi(" "));
+		System.out.println(myAtoi("2147483646 "));
 	}
 
 	public static int myAtoi(String str) {

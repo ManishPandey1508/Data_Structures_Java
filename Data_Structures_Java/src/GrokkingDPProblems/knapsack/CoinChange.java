@@ -1,5 +1,7 @@
 package GrokkingDPProblems.knapsack;
 
+import java.util.Arrays;
+
 public class CoinChange {
 
 	public static void main(String[] args) {
@@ -11,7 +13,7 @@ public class CoinChange {
 
 		System.out.println("Recursive solution      " + coinChange(denominations, 5, 0));
 		System.out.println("Top Down DP   " + coinChangetopDownDP(denominations, change, dp, 0));
-		System.out.println("Bottom UP  DP   " + coindChangeBUPDP(denominations, change));
+	
 
 	}
 
@@ -56,27 +58,6 @@ public class CoinChange {
 
 	}
 
-	public static int coindChangeBUPDP(int[] denominations, int change) {
-
-		int[][] dp = new int[denominations.length][change + 1];
-
-		for (int i = 0; i < denominations.length; i++) {
-			dp[i][0] = 1;
-		}
-
-		for(int i=0 ; i<denominations.length;i++) {
-			
-			for (int j = 1; j <=change; j++) {
-				
-				if(i>0)
-					dp[i][j]=dp[i-1][j];
-				if(denominations[i] <= j)
-				dp[i][j]+= dp[i][j-denominations[i]];
-			}
-			
-		}
-		return dp[denominations.length-1][change];
-		
-	}
+	
 
 }

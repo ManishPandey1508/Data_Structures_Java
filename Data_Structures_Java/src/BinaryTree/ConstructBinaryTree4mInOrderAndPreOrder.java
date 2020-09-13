@@ -38,8 +38,13 @@ public class ConstructBinaryTree4mInOrderAndPreOrder {
 		return tNode;
 
 	}
-
+	 
 	public int search(int[] inorder, int inStartIndex, int inEndIndex, int val) {
+		
+		
+		
+		
+		
 		int i;
 		for (i = inStartIndex; i <=inEndIndex; i++) {
 			if (inorder[i] == val)

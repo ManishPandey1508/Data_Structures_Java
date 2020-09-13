@@ -4,114 +4,56 @@ package GrokkingDPProblems.knapsack;
 public class SubSetSuM {
 
 	public static void main(String[] args) {
-		int[] num = {1, 2, 7, 1, 5};
+		int[] num = { 3, 34, 4, 12, 5, 2 };
 
-		System.out.println(canPartition(num, 10));
-		System.out.println(canPartitionBottomUP(num, 10));
-		System.out.println("Recursive "+ canPartitionRecursive(num,10,0));
+		System.out.println(subSetSumRecurBottomUP(num, 13));
+		System.out.println("Recursive " + subSetSumRecur(num, 13, num.length));
 	}
 
-	public static boolean canPartition(int[] num, int sum) {
+	private static boolean subSetSumRecur(int[] num, int target, int size) {
 
-		if (num == null || num.length == 0)
+		if (size == 0 && target != 0)
 			return false;
-
-		if (sum == 0)
+		else if (target == 0)
 			return true;
-
-		int[][] dp = new int[num.length][sum + 1];
-
-		for (int i = 0; i < dp.length; i++) {
-
-			for (int j = 0; j < dp[i].length; j++) {
-				dp[i][j] = -1;
-			}
-		}
-
-		boolean result = canPartitionDPTopDown(num, dp, sum, 0);
-				
-		return result;
-
-	}
-	
-	private static boolean canPartitionRecursive(int[] num,int target,int index) {
-		
-		
-		if(index>=num.length)
-			return target==0;
-		if(target==0)
-			return true;
-		boolean bool1 = false,bool2 = false;
-		if(num[index]<= target)
-			bool1= canPartitionRecursive(num, target-num[index], index+1);
-		bool2 = canPartitionRecursive(num, target, index+1);
-		
-		return bool1 || bool2;
-	}
-	
-	
-
-	private static boolean canPartitionDPTopDown(int[] num, int[][] dp, int sum, int index) {
-
-		if (sum == 0)
-			return true;
-
-		if (index < 0 || index >= num.length)
-			return false;
-
-		if (dp[index][sum] != -1)
-			return dp[index][sum] == 1 ? true : false;
-
-		// if we include current element in result set
-		boolean result = false;
-		if (canPartitionDPTopDown(num, dp, sum, index + 1)) {
-			dp[index][sum] = 1;
-			return true;
-		} else if (num[index] <= sum) {
-			if (canPartitionDPTopDown(num, dp, sum - num[index], index + 1)) {
-				dp[index][sum] = 1;
-				result = true;
+		else {
+			if (num[size - 1] <= target) {
+				boolean a = subSetSumRecur(num, target - num[size - 1], size - 1);
+				boolean b = subSetSumRecur(num, target, size - 1);
+				return a || b;
 			} else {
-				dp[index][sum] = 0;
+				return subSetSumRecur(num, target, size - 1);
 			}
 		}
 
-		return result;
 	}
-
 	
 	
-	private static boolean canPartitionBottomUP(int[] num, int sum) {
+	private static boolean subSetSumRecurBottomUP(int[] num, int sum) {
 
-		boolean[][] dp = new boolean[num.length][sum + 1];
-		
-		// Fill edge scenarios of DP
-		// if sum is 0
-		for (int i = 0; i < num.length; i++) {
-			dp[i][0] = true;
+		boolean[][] dp = new boolean[num.length + 1][sum + 1];
+
+		for (int i = 0; i < num.length + 1; i++) {
+
+			for (int j = 0; j < sum + 1; j++) {
+				if(i==0 && j!=0)
+					dp[i][j]=false;
+				else if(j==0)
+					dp[i][j] = true;
+
+				else {
+					if (num[i - 1] <= j) {
+						dp[i][j] = dp[i - 1][j - num[i - 1]] || dp[i - 1][j];
+					} else {
+						dp[i][j] = dp[i - 1][j];
+					}
+
+				}
+
+			}
 		}
 
-		// if there is just one no , that no should be equal to the sum 
-		for (int s = 1; s < sum; s++) {
-			
-				 dp[0][s] = (num[0] == s ? true : false);
-			
-		}
-
-		 for (int i = 1; i < num.length; i++) {
-		      for (int s = 1; s <= sum; s++) {
-		        // if we can get the sum 's' without the number at index 'i'
-		        if (dp[i - 1][s]) {
-		          dp[i][s] = dp[i - 1][s];
-		        } else if (s >= num[i]) {
-		          // else include the number and see if we can find a subset to get the remaining
-		          // sum
-		          dp[i][s] = dp[i - 1][s - num[i]];
-		        }
-		      }
-		    }
-
-		return dp[num.length-1][sum];
+		return dp[num.length][sum];
 	}
 
 }

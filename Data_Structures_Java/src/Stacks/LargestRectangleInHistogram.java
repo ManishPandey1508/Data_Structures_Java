@@ -2,80 +2,83 @@ package Stacks;
 
 import java.util.Stack;
 
+
+
+// Find Nearest smaller to left and nearest smaller to right.
 public class LargestRectangleInHistogram {
 
 	public static void main(String[] args) {
-		int[] heights = { 2, 1};
+		int[] heights = {};
 
-		System.out.println("Area is " + largestRectangleAreaBrutForce(heights));
-		
 		System.out.println("Area is " + largestRectangleArea(heights));
 	}
 
 	public static int largestRectangleArea(int[] heights) {
 
-		if (heights == null || heights.length == 0)
-			return 0;
+		int[] nsr = findNSRIndex(heights);
+		int[] nsl = findNSLIndex(heights);
+		int[] width = new int[heights.length];
 
-		int max = 0;
-		int i = 0;
-		Stack<Integer> stack = new Stack<>();
-
-		while (i < heights.length) {
-
-			int height = heights[i];
-			// If stack is empty or top element push index in stack increment i
-
-			if (stack.isEmpty() || height >= heights[stack.peek()]) {
-				stack.push(i++);
-			} else {
-				int p = stack.pop();
-				int h = heights[p];
-				int width = 0;
-				if (stack.isEmpty())
-					width = i;
-				else {
-					width = i - stack.peek() - 1;
-				}
-				max = Math.max(h*width, max);
-
-			}
-
+		for (int i = 0; i < heights.length; i++) {
+			width[i] = nsr[i] - nsl[i] - 1;
 		}
-		
-		while(!stack.isEmpty()) {
-			int p = stack.pop();
-			int h = heights[p];
-			int w = stack.isEmpty()?i: i - stack.peek()-1;
-			max = Math.max(h*w, max);
-		}
-		
-		
-		
-		return max;
-
-	}
-
-	public static int largestRectangleAreaBrutForce(int[] heights) {
-
-		if (heights == null || heights.length == 0)
-			return 0;
 
 		int max = 0;
 
 		for (int i = 0; i < heights.length; i++) {
-
-			max = Math.max(max, heights[i]);
-			int minHeight = heights[i];
-			for (int j = i + 1; j < heights.length; j++) {
-				minHeight = Math.min(minHeight, heights[j]);
-				int rectangeWidth = j - i + 1;
-				max = Math.max(max, minHeight * rectangeWidth);
-
-			}
-
+			max = Math.max(max, width[i] * heights[i]);
 		}
+
 		return max;
+
+	}
+
+	private static int[] findNSLIndex(int[] heights) {
+
+		int start = 0;
+
+		int[] res = new int[heights.length];
+
+		Stack<Integer> stack = new Stack<Integer>();
+
+		while (start < heights.length) {
+			while (!stack.isEmpty() && heights[stack.peek()] >= heights[start]) {
+				stack.pop();
+			}
+			if (stack.isEmpty()) {
+				res[start] = -1;
+			} else {
+				res[start] = stack.peek();
+			}
+			stack.push(start);
+			start++;
+		}
+
+		return res;
+	}
+
+	private static int[] findNSRIndex(int[] heights) {
+		
+		int end = heights.length-1;
+
+		int[] res = new int[heights.length];
+
+		Stack<Integer> stack = new Stack<Integer>();
+
+		while (end >= 0) {
+			while (!stack.isEmpty() && heights[stack.peek()] >= heights[end]) {
+				stack.pop();
+			}
+			if (stack.isEmpty()) {
+				res[end] = heights.length;
+			} else {
+				res[end] = stack.peek();
+			}
+			stack.push(end);
+			end--;
+		}
+
+		return res;
 	}
 
 }

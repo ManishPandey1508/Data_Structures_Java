@@ -22,6 +22,34 @@ public class GenerateParentheses {
 
 	}
 
+	   public List<String> generateParenthesisBrutforce(int n) {
+		   
+	        List<String> result = new ArrayList<>();
+	        if(n==0)
+	            return result;
+	       
+	        result.add("()");
+	        int i=2;
+	        
+	        while(i<=n){
+	            int size = result.size();
+	           List<String> temp = new ArrayList<>();  
+	           for(String str:result){
+	               temp.add("("+str+")");
+	               temp.add("()"+str);
+	           }
+	            result = temp;
+	            i++;
+	    }
+	        return result;
+	  }
+	    
+	   
+	
+	
+	
+	
+	
 	/*
 	 * My method is DP. First consider how to get the result f(n) from previous
 	 * result f(0)...f(n-1). Actually, the result f(n) will be put an extra () pair

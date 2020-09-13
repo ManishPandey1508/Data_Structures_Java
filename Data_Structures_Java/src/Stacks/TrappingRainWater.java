@@ -16,46 +16,44 @@ public class TrappingRainWater {
 
 	public static void main(String[] args) {
 		int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
-		System.out.println("Water Quantity"+ trap(height));
+		System.out.println("Water Quantity  " + trap(height));
 
 	}
 
+	// Water at particualr index will dpened on Sum of (Math.Min(Max_Left_Height,
+	// Max_Right_Height) at Index i - Current_Height)
+
 	public static int trap(int[] height) {
 
-		 
-        if(height==null || height.length==0)
-            return 0;
-        
-        int length = height.length;
-        
-        int[] leftToRight = new int[length];
-        
-        int[] rightToLeft = new int[length];
-       
-        int max = height[0];
-        leftToRight[0]= height[0];
-        
-        for(int i=1;i< length;i++){
-           max = Math.max(max,height[i]);
-             leftToRight[i] = max;
-        }
-        max = height[length-1];
-        rightToLeft[length-1] = max;
-        
-           for(int i=length-2;i>=0;i--){
-            max = Math.max(max,height[i]);
-               rightToLeft[i] = max;
-        }
-        
-        int water =0;
-        
-        for(int i=0;i<length;i++){
-         
-            water+= Math.min(leftToRight[i],rightToLeft[i])- height[i];
-            
-        }
-        
-        return water;
+		int water = 0;
+		int[] leftToright = new int[height.length];
+		int[] rightToLeft = new int[height.length];
+
+		// Calculate max Left height at each index
+		int maxLeft = Integer.MIN_VALUE;
+		int maxRight = Integer.MIN_VALUE;
+
+		for (int i = 0; i < height.length; i++) {
+			maxLeft = Math.max(maxLeft, height[i]);
+			leftToright[i] = maxLeft;
+
+		}
+
+		// Calculate max right height at each index
+		for (int i = height.length-1; i >=0; i--) {
+			maxRight = Math.max(maxRight, height[i]);
+			rightToLeft[i] = maxRight;
+		}
+
+		// calcualte water
+
+		for (int i = 0; i < height.length; i++) {
+
+			water += Math.min(leftToright[i], rightToLeft[i]) - height[i];
+
+		}
+		return water;
+
 	}
 
 }

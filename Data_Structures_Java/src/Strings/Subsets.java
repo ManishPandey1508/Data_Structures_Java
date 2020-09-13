@@ -27,28 +27,34 @@ public class Subsets {
 
 	public static void main(String[] args) {
 
-		int[] nums = { 1, 2, 3 };
+		int[] nums = { 1, 2, 3,4 };
 		System.out.println(subsets(nums));
 	}
 
 	public static List<List<Integer>> subsets(int[] nums) {
 		List<List<Integer>> list = new ArrayList<>();
-		Arrays.sort(nums);
-		backtrack(list, new ArrayList<>(), nums, 0);
+			List<Integer> tempList = new ArrayList<>();
+		backtrack(list, tempList, nums, 0);
 		return list;
 	}
 
 	private static void backtrack(List<List<Integer>> list, List<Integer> tempList, int[] nums, int start) {
 
-		list.add(new ArrayList<>(tempList));
-
-		for (int i = start; i < nums.length; i++) {
-
-			tempList.add(nums[i]);
-			backtrack(list, tempList, nums, i + 1);
-			tempList.remove(tempList.size() - 1);
+		if(start >= nums.length)
+		{	
+	    list.add(tempList);
+		return;
 		}
-
+		
+		List<Integer> temp1 = new ArrayList<>();
+		List<Integer> temp2 = new ArrayList<>();
+		temp1.addAll(tempList);
+		temp2.addAll(tempList);
+		temp2.add(nums[start]);
+		start++;
+		
+		backtrack(list, temp1, nums, start);
+		backtrack(list, temp2, nums, start);
 	}
 
 }

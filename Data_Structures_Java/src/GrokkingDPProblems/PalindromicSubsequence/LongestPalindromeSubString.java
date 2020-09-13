@@ -17,6 +17,8 @@ public class LongestPalindromeSubString {
 
 		System.out.println("Longest Palindromic SubString through BOTTOMUP DP  is  " + LPSBottomUp(str));
 
+		System.out.println(longestPalindrome(""));
+
 	}
 
 	public static int LPSrecursive(String str, int start, int end) {
@@ -85,16 +87,67 @@ public class LongestPalindromeSubString {
 		for (int i = str.length() - 1; i > 0; i--) {
 			for (int j = i + 1; j < str.length(); j++) {
 				if (str.charAt(i) == str.charAt(j))
-					
+
 					if (Math.abs(i - j) == 1 || dp[i + 1][j - 1]) {
 						dp[i][j] = true;
-						maxCount = Math.max(Math.abs(i-j) + 1, maxCount);
+						maxCount = Math.max(Math.abs(i - j) + 1, maxCount);
 					}
 
 			}
 
 		}
 		return maxCount;
+
+	}
+
+	public static String longestPalindrome(String s) {
+
+		int length = s.length();
+
+		if (length == 0)
+			return "";
+
+		if (length == 1)
+			return s;
+
+		int maxStartAt = 0;
+		int maxLength = 1;
+
+		// create a 2 d boolean array
+
+		boolean[][] dp = new boolean[length][length];
+
+		// populate dp for 1 length
+
+		for (int i = 0; i < length; i++) {
+			dp[i][i] = true;
+		}
+
+		// populate dp for 2 length
+
+		for (int j = 1; j < length; j++) {
+			if (s.charAt(j - 1) == s.charAt(j)) {
+				dp[j - 1][j] = true;
+				maxStartAt = j - 1;
+				maxLength = 2;
+			}
+
+		}
+		// for length 3 and more
+		for (int j = 3; j <= length; j++) {
+
+			for (int k = 0; k < length - j + 1; k++) {
+
+				if (s.charAt(k) == s.charAt(k + j - 1) && dp[k + 1][k + j - 2]) {
+					dp[k][k + j - 1] = true;
+					maxStartAt = k;
+					maxLength = j;
+				}
+			}
+
+		}
+
+		return s.substring(maxStartAt, maxStartAt + maxLength );
 
 	}
 

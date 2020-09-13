@@ -18,6 +18,7 @@ public class KSortedLists {
 
 		if(lists[0]==null)
 			return null;
+		
 		ListNode result = new ListNode(-1);
 		ListNode current = result;
 		int k = lists.length;

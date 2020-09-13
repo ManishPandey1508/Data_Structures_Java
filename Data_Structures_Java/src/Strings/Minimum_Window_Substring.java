@@ -23,62 +23,78 @@ public class Minimum_Window_Substring {
 
 	public static String minWindow(String s, String t) {
 
-		
+		if (t.length() > s.length())
+			return "";
 
-		Map<Character, Integer> map = new HashMap<>();
+		int winStart = 0;
+		int winEnd = 0;
+		int minWinStart = -1;
+		int minWinEnd = -1;
+		int minWinlength = Integer.MAX_VALUE;
+		boolean matchFound = false;
 
-		// prepare a map of frequency of 't'
-		for (char c : t.toCharArray()) {
-			if (map.containsKey(c)) {
-				map.put(c, map.get(c) + 1);
+		int matchedCount = 0;
+		Map<Character, Integer> hm = new HashMap<>();
+		String res = null;
+
+		// Create freq Map for string t
+
+		for (int i = 0; i < t.length(); i++) {
+			char c = t.charAt(i);
+			if (hm.containsKey(c)) {
+				hm.put(c, hm.get(c) + 1);
 			} else {
-				map.put(c, 1);
+				hm.put(c, 1);
 			}
-
 		}
-		
-		int left = 0, right = 0, count = 0, minLength = s.length() + 1, minLengthStartsAt = 0;
-		
-		
-		// take a counter as right and starts moving it from left to right of 'S'
-		for (right = 0; right < s.length(); right++) {
-			
-			char key = s.charAt(right);
-			// check if right character belongs to t, if it does thn increase count and reduce
-			// frequency in map
 
-			if (map.containsKey(key)) {
-				map.put(key, map.get(key) - 1);
+		// Traverese theough whole String s
+
+		while (winEnd < s.length()) {
+
+			char c = s.charAt(winEnd);
+
+			// if current character exist in map thn reduce map frequebcy but only change
+			// matched
+			// count if this actully matters and not reduntant
+			if (hm.containsKey(c)) {
+				hm.put(c, hm.get(c) - 1);
+				if (hm.get(c) >= 0)
+					matchedCount++;
 				
-				if (map.get(key) >= 0) {
-					count++;				
-				}
+				
 			}
 
-			while (count == t.length()) {
+			// Check if min found
+			while (matchedCount == t.length()) {
+				
+				if ( minWinlength > winEnd - winStart+1) {
+					matchFound = true;
+					minWinStart = winStart;
+					minWinEnd = winEnd;
+					minWinlength = winEnd - winStart + 1;
 
-				if (right - left + 1 < minLength) {
-					minLength = right - left + 1;
-					minLengthStartsAt = left;
 				}
 
-				if (map.containsKey(s.charAt(left))) {
-
-					map.put(s.charAt(left), map.get(s.charAt(left)) + 1);
-					if (map.get(s.charAt(left)) > 0) {
-						count--;
+				char start = s.charAt(winStart);
+				if (hm.containsKey(start)) {
+					if (hm.get(start) >= 0) {
+						matchedCount--;
 					}
+
+					hm.put(start, hm.get(start) + 1);
 				}
-				left++;
+
+				winStart++;
 			}
 
+			winEnd++;
 		}
-		System.out.println("Min Length starts At   ---- " + minLengthStartsAt);
-		System.out.println("Min Length ---- " + minLength);
-		System.out.println("left "+ left);
-		System.out.println("right "+ right);
-		
-		return minLength == s.length() + 1 ? "" : s.substring(minLengthStartsAt, minLengthStartsAt + minLength);
+
+		if (matchFound) {
+			return s.substring(minWinStart, minWinEnd + 1);
+		} else
+			return "";
 
 	}
 

@@ -60,7 +60,7 @@ public class NumberOfIslands {
 
 	private static void markIslandcounted(char[][] grid,int row, int col, int i, int j) {
 	
-		if(i<0||j<0 || i>=row|| j>=col|| grid[i][j] !=1) return;
+		if(i<0||j<0 || i>=row|| j>=col|| grid[i][j] !='1') return;
 		
 		grid[i][j] = '0';
 		

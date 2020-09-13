@@ -1,5 +1,6 @@
 package GrokkingDPProblems.knapsack;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,74 +11,78 @@ Each item can only be selected once, which means either we put an item in the kn
 public class Knapsack01 {
 
 	public static void main(String[] args) {
-		int[] weights = { 2, 3, 1, 4 };
-		int[] value = { 4, 5, 3, 7 };
-		int capacity = 5;
+		int[] value = { 1, 6, 10, 16 };
+		int[] weights = { 1, 2, 3, 5 };
+		int capacity = 7;
 
 		System.out.println("Max Value " + maxvalue(weights, value, capacity));
-		System.out.println("Max Value " + maxvalueBottomUpDP(weights, value, capacity));
+		System.out.println("Max Value " + maxvalueDP(weights, value, capacity));
+
 	}
 
 	// Naive Brute force Solution , Use recursion
 	public static int maxvalue(int[] weight, int[] value, int capacity) {
 
-		int max = helperBruteForce(weight, value, capacity, 0);
+		int max = helperBruteForce(weight, value, capacity, weight.length);
 
 		return max;
 	}
 
-	private static int helperBruteForce(int[] weight, int[] value, int capacity, int currentIndex) {
+	// Naive Brute force Solution , Use recursion
+	public static int maxvalueDP(int[] weight, int[] value, int capacity) {
 
-		if (capacity <= 0 || currentIndex < 0 || currentIndex >= weight.length)
-			return 0;
+		int[][] dp = new int[weight.length + 1][capacity + 1];
 
-		int currentWeight = weight[currentIndex];
-		int currentValue = value[currentIndex];
-		int total1 = 0, total2 = 0;
-
-		// total by including current index
-
-		if (currentWeight <= capacity) {
-			total1 = currentValue + helperBruteForce(weight, value, capacity - currentWeight, currentIndex + 1);
+		for (int i = 0; i <= weight.length; i++) {
+			Arrays.fill(dp[i], -1);
 		}
-		// total by excluding current index
-		total2 = helperBruteForce(weight, value, capacity, currentIndex + 1);
 
-		// return the max
-		return Math.max(total1, total2);
-	}
-
-	// Naive Brute force Solution , Using DP
-	public static int maxvalueBottomUpDP(int[] weights, int[] value, int capacity) {
-
-		Integer[][] dp = new Integer[weights.length][capacity + 1];
-
-		int max = helpermemoization(weights, value, capacity, dp, 0);
+		int max = helpermemoization(weight, value, capacity, dp, weight.length);
 
 		return max;
 	}
 
-	private static int helpermemoization(int[] weights, int[] profits, int capacity, Integer[][] dp, int currentIndex) {
+	private static int helperBruteForce(int[] weight, int[] value, int capacity, int size) {
 
-		if (capacity <= 0 || currentIndex < 0 || currentIndex >= profits.length)
+		// base condition
+		if (size == 0 || capacity == 0)
 			return 0;
+		// weight[i] < capacity-- > either include the item or dont, find max in both
+		// condition
+		if (weight[size - 1] <= capacity) {
 
-		if (dp[currentIndex][capacity] != null)
-			return dp[currentIndex][capacity];
+			return Math.max(value[size - 1] + helperBruteForce(weight, value, capacity - weight[size - 1], size - 1),
+					helperBruteForce(weight, value, capacity, size - 1));
 
-		int profit1 = 0, profit2 = 0;
+		} else {
 
-		// profit including current Index
+			return helperBruteForce(weight, value, capacity, size - 1);
+		}
 
-		if (weights[currentIndex] <= capacity)
-			profit1 = profits[currentIndex]
-					+ helpermemoization(weights, profits, capacity - weights[currentIndex], dp, currentIndex + 1);
+	}
 
-		profit2 = helpermemoization(weights, profits, capacity, dp, currentIndex + 1);
+	private static int helpermemoization(int[] weights, int[] value, int capacity, int[][] dp, int size) {
+		if (size == 0 || capacity == 0) {
+			dp[size][capacity] = 0;
+			return dp[size][capacity];
+		}
 
-		dp[currentIndex][capacity] = Math.max(profit1, profit2);
+		if (dp[size][capacity] != -1)
+			return dp[size][capacity];
 
-		return dp[currentIndex][capacity];
+		else if (weights[size - 1] <= capacity) {
+
+			dp[size][capacity] = Math.max(
+					value[size - 1] + helperBruteForce(weights, value, capacity - weights[size - 1], size - 1),
+					helperBruteForce(weights, value, capacity, size - 1));
+
+		} else {
+
+			dp[size][capacity] = helperBruteForce(weights, value, capacity, size - 1);
+		}
+
+		return dp[size][capacity];
+
 	}
 
 }

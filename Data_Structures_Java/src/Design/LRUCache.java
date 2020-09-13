@@ -71,7 +71,6 @@ public class LRUCache {
 		} else {
 			return -1;
 		}
-
 	}
 
 	public void put(int key, int value) {
@@ -79,7 +78,6 @@ public class LRUCache {
 		if (!map.containsKey(key)) {
 
 			if (map.size() >= capacity) {
-
 				Node node = tail.pre;
 				map.remove(node.key);
 				delete(node);
